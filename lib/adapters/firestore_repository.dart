@@ -7,6 +7,7 @@ class FireStoreRepository {
   final CollectionReference todoCollection =
   FirebaseFirestore.instance.collection("todo");
   
+  // Get All
   Future<List<Task>> getAllTasks() async {
     List<Task> tasks = new List<Task>();
     
@@ -20,6 +21,23 @@ class FireStoreRepository {
     });
     
     return tasks;
+  }
+  
+  // Insert new
+  Future<void> newTask(Task task) async {
+    await todoCollection.add({
+      'title': task.Title,
+      'description': task.Description,
+      'status': false
+    });
+  }
+  // Update / Done
+  Future<void> updateTask(String id, Task task) async {
+    await todoCollection.doc(id).update({
+      'title': task.Title,
+      'description': task.Description,
+      'status': task.Status
+    });
   }
   
 }

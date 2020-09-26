@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:ma_todo/model/task.dart';
 
 class ListItem extends StatelessWidget {
-  ListItem({Key key, Task task}) : super(key: key);
+  const ListItem({Key key, this.task}) : super(key: key);
 
+  final Task task;
+  
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -47,22 +49,21 @@ class ListItem extends StatelessWidget {
             ),
           ),
         ),
-        
-        
         key: ValueKey("test"),
         child: Card(
           elevation: 0,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const ListTile(
+              ListTile(
                 title: Text(
-                    'Todo item',
+                    '${task.Title}',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold
                   ),
                 ),
+                subtitle: Text('${task.Description}'),
               ),
             ],
           ),

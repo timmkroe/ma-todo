@@ -39,11 +39,21 @@ class _MyHomePageState extends State<MyHomePage> {
   FireStoreRepository repository = FireStoreRepository();
   bool _isLoading = true;
   List<Task> tasks;
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
 
   @override
   void initState() {
     _fetchPosts();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    titleController.dispose();
+    descriptionController.dispose();
+    super.dispose();
   }
 
   _fetchPosts() async {
@@ -127,6 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20)),
                             ),
+                            controller: titleController,
                             validator: (value) {
                               if (value.isEmpty) {
                                 return 'Bitte einen Titel eingeben!';
@@ -142,6 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20)),
                             ),
+                            controller: descriptionController,
                             validator: (value) {
                               if (value.isEmpty) {
                                 return 'Bitte eine Beschreibung eingeben!';
@@ -153,7 +165,14 @@ class _MyHomePageState extends State<MyHomePage> {
                           SizedBox(
                             width: double.infinity,
                             child: RaisedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (_formKey.currentState.validate()) {
+                                  Task task = new Task(titleController.text, descriptionController.text, false);
+                                  repository.newTask(task);
+                                  _fetchPosts();
+                                  Navigator.pop(context);
+                                }
+                              },
                               child: Text(
                                 'Save',
                                 style: TextStyle(fontSize: 25),
