@@ -10,64 +10,62 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Dismissible(
-        background: Container(
-          color: Colors.green,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width: 20),
-                Icon(
-                  Icons.edit,
-                  color: Colors.white,
+      child: GestureDetector(
+        onTap: () {
+          showModalBottomSheet(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0)),
+            ),
+            context: context,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      '${task.Title}',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      '${task.Description}',
+                      style: TextStyle(
+                        color: Colors.black26
+                      ),
+                    ),
+                    SizedBox(height: 200)
+                  ],
                 ),
-                Text(
-                  " Done",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700
-                  ),
-                  textAlign: TextAlign.left,
-                )
-              ],
-            ),
-          ),
-        ),
-        secondaryBackground: Container(
-          color: Colors.red,
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Icon(Icons.delete, color: Colors.white),
-                Text('Delete ', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-                SizedBox(width: 20),
-              ],
-            ),
-          ),
-        ),
-        key: ValueKey("test"),
+              );
+            },
+          );
+        },
         child: Card(
-          elevation: 0,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                title: Text(
-                    '${task.Title}',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold
+            elevation: 0,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                      '${task.Title}',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
+                  subtitle: Text('${task.Description}'),
                 ),
-                subtitle: Text('${task.Description}'),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
       ),
     );
   }
