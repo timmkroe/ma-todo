@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "256679648086",
+    "firebase_url": "https://matodo-f4ebe.firebaseio.com",
+    "project_id": "matodo-f4ebe",
+    "storage_bucket": "matodo-f4ebe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256679648086:android:dfe68f31e95d759cf4d4f7",
+        "android_client_info": {
+          "package_name": "com.timmkroe.ma_todo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256679648086-vq7gp6coo66vpbm4j7i3drpf3if6iobe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMTPJYSsZahXZcI1ua1SnQSbhjsW6r34I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256679648086-vq7gp6coo66vpbm4j7i3drpf3if6iobe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
