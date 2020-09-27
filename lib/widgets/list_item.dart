@@ -6,7 +6,7 @@ class ListItem extends StatelessWidget {
   const ListItem({Key key, this.task}) : super(key: key);
 
   final Task task;
-  
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -27,21 +27,46 @@ class ListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(
-                      '${task.Title}',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Column(
+                            children: [
+                              Text(
+                                '${task.Title}',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 26),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 4),
+                        Text(
+                          '20.02.2020',
+                          style: TextStyle(
+                              color: Colors.black38
+                          ),
+                        )
+                      ],
                     ),
                     SizedBox(height: 20),
-                    Text(
-                      '${task.Description}',
-                      style: TextStyle(
-                        color: Colors.black26
+                    RichText(
+                      text: TextSpan(
+                          style: TextStyle(
+                              color: Colors.black45,
+                              fontSize: 20
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: '${task.Description}'
+                            )
+                          ]
                       ),
                     ),
-                    SizedBox(height: 200)
+                    SizedBox(height: 50)
                   ],
                 ),
               );
@@ -49,23 +74,43 @@ class ListItem extends StatelessWidget {
           );
         },
         child: Card(
-            elevation: 0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                ListTile(
-                  title: Text(
-                      '${task.Title}',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold
+          elevation: 1,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Column(
+                        children: [
+                          Text(
+                            '${task.Title}',
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  subtitle: Text('${task.Description}'),
+                    Text(
+                      '20.02.2020',
+                      style: TextStyle(
+                        color: Colors.black38
+                      ),
+                    )
+                  ],
                 ),
-              ],
-            ),
+                subtitle: Text('${task.Description}'),
+              ),
+            ],
           ),
+        ),
       ),
     );
   }

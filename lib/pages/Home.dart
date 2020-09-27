@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ma_todo/adapters/firestore_repository.dart';
 import 'package:ma_todo/model/task.dart';
@@ -52,123 +53,147 @@ class _HomeState extends State<Home> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Todo"),
-      ),
-      body: tasks != null ? ListView.builder(
-        padding: const EdgeInsets.all(10),
-        itemCount: tasks.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListItem(task: tasks[index]);
-        },
-      ) : Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(Icons.done_all, size: 100, color: Colors.black38,),
-            Text('All done!')
-          ],
+    
+    if (_isLoading) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.loop, size: 100, color: Colors.black38,),
+              Text('Loading...')
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Add',
-        child: Icon(Icons.add),
-        onPressed: () {
-          showModalBottomSheet(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0)),
-            ),
-            context: context,
-            isScrollControlled: true,
-            builder: (BuildContext context) {
-              return Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      'New Task',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30),
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(height: 20),
-                          TextFormField(
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              labelText: 'Title',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                            ),
-                            controller: titleController,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Bitte einen Titel eingeben!';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 20),
-                          TextFormField(
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              labelText: 'Description',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                            ),
-                            controller: descriptionController,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Bitte eine Beschreibung eingeben!';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 20),
-                          SizedBox(
-                            width: double.infinity,
-                            child: RaisedButton(
-                              onPressed: () {
-                                if (_formKey.currentState.validate()) {
-                                  Task task = new Task(titleController.text, descriptionController.text, false);
-                                  repository.newTask(task);
-                                  _fetchPosts();
-                                  Navigator.pop(context);
-                                }
-                              },
-                              child: Text(
-                                'Save',
-                                style: TextStyle(fontSize: 25),
-                              ),
-                              color: Colors.teal,
-                              textColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
-                        ],
+      );
+    } else if (!_isLoading && tasks != null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Todo"),
+        ),
+        body: ListView.builder(
+          padding: const EdgeInsets.all(10),
+          itemCount: tasks.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ListItem(task: tasks[index]);
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          tooltip: 'Add',
+          child: Icon(Icons.add),
+          onPressed: () {
+            showModalBottomSheet(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0)),
+              ),
+              context: context,
+              isScrollControlled: true,
+              builder: (BuildContext context) {
+                return Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        'New Task',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30),
                       ),
-                    )
-                  ],
-                ),
-              );
-            },
-          );
-        },
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(height: 20),
+                            TextFormField(
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                labelText: 'Title',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                              ),
+                              controller: titleController,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Bitte einen Titel eingeben!';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 20),
+                            TextFormField(
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                labelText: 'Description',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                              ),
+                              controller: descriptionController,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Bitte eine Beschreibung eingeben!';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 20),
+                            SizedBox(
+                              width: double.infinity,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState.validate()) {
+                                    Task task = new Task(titleController.text, descriptionController.text, false);
+                                    repository.newTask(task);
+                                    _fetchPosts();
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(fontSize: 25),
+                                ),
+                                color: Colors.teal,
+                                textColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Todo'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(Icons.done_all, size: 100, color: Colors.black38,),
+              Text('All done!')
+            ],
+          ),
+        ),
+      );
+  }
+    
   }
 }
