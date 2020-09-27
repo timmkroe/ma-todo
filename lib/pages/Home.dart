@@ -72,12 +72,22 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           title: Text("Todo"),
         ),
-        body: ListView.builder(
-          padding: const EdgeInsets.all(10),
-          itemCount: tasks.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ListItem(task: tasks[index]);
-          },
+        body: Container(
+          child: Center(
+            child: RefreshIndicator(
+              onRefresh: () {
+                _fetchPosts();
+                return null;
+                },
+              child: ListView.builder(
+                padding: const EdgeInsets.all(10),
+                itemCount: tasks.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListItem(task: tasks[index]);
+                },
+              ),
+            ),
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           tooltip: 'Add',
