@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ma_todo/adapters/firestore_repository.dart';
 import 'package:ma_todo/model/task.dart';
 import 'package:ma_todo/widgets/list_item.dart';
@@ -16,10 +17,14 @@ class _HomeState extends State<Home> {
   List<Task> tasks;
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
+  final dueDateController = TextEditingController();
+
+  // Date
+  DateTime selectedDate;
 
   @override
   void initState() {
-    _fetchPosts();
+    _fetchTasks();
     super.initState();
   }
 
@@ -28,10 +33,11 @@ class _HomeState extends State<Home> {
     // Clean up the controller when the widget is disposed.
     titleController.dispose();
     descriptionController.dispose();
+    dueDateController.dispose();
     super.dispose();
   }
 
-  _fetchPosts() async {
+  _fetchTasks() async {
     try {
       setState(() {
         _isLoading = true;
@@ -50,10 +56,9 @@ class _HomeState extends State<Home> {
       print(e);
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    
     if (_isLoading) {
       return Scaffold(
         body: Center(
@@ -61,7 +66,11 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(Icons.loop, size: 100, color: Colors.black38,),
+              Icon(
+                Icons.loop,
+                size: 100,
+                color: Colors.black38,
+              ),
               Text('Loading...')
             ],
           ),
@@ -76,9 +85,9 @@ class _HomeState extends State<Home> {
           child: Center(
             child: RefreshIndicator(
               onRefresh: () {
-                _fetchPosts();
-                return null;
-                },
+                _fetchTasks();
+                return null; // nicht optimal
+              },
               child: ListView.builder(
                 padding: const EdgeInsets.all(10),
                 itemCount: tasks.length,
@@ -153,14 +162,49 @@ class _HomeState extends State<Home> {
                               },
                             ),
                             SizedBox(height: 20),
+                            TextFormField(
+                              controller: dueDateController,
+                              decoration: InputDecoration(
+                                  labelText: 'Due Date',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  )),
+                              readOnly: true,
+                              onTap: () => {
+                                showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(DateTime.now().year),
+                                  lastDate: DateTime(2025),
+                                ).then((value) => {
+                                      dueDateController.text =
+                                          DateFormat.yMd().format(value),
+                                      setState(() {
+                                        selectedDate = value;
+                                      })
+                                    })
+                              },
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Bitte ein Datum auswählen!';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 20),
                             SizedBox(
                               width: double.infinity,
                               child: RaisedButton(
                                 onPressed: () {
                                   if (_formKey.currentState.validate()) {
-                                    Task task = new Task(titleController.text, descriptionController.text, false);
+                                    Task task = new Task(
+                                        null,
+                                        titleController.text,
+                                        descriptionController.text,
+                                        false,
+                                        selectedDate);
                                     repository.newTask(task);
-                                    _fetchPosts();
+                                    _fetchTasks();
                                     Navigator.pop(context);
                                   }
                                 },
@@ -175,7 +219,9 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).viewInsets.bottom),
                           ],
                         ),
                       )
@@ -197,13 +243,16 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.done_all, size: 100, color: Colors.black38,),
+              Icon(
+                Icons.done_all,
+                size: 100,
+                color: Colors.black38,
+              ),
               Text('All done!')
             ],
           ),
         ),
       );
-  }
-    
+    }
   }
 }

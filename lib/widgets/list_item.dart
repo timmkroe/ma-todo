@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:ma_todo/adapters/firestore_repository.dart';
 import 'package:ma_todo/model/task.dart';
+import 'package:ma_todo/pages/Home.dart';
 
 class ListItem extends StatelessWidget {
-  const ListItem({Key key, this.task}) : super(key: key);
+  ListItem({Key key, this.task}) : super(key: key);
 
   final Task task;
+  FireStoreRepository repository = new FireStoreRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +49,7 @@ class ListItem extends StatelessWidget {
                         ),
                         SizedBox(width: 4),
                         Text(
-                          '20.02.2020',
+                          '${DateFormat("dd.MM.yyyy").format(task.dueDate)}',
                           style: TextStyle(
                               color: Colors.black38
                           ),
@@ -66,7 +70,27 @@ class ListItem extends StatelessWidget {
                           ]
                       ),
                     ),
-                    SizedBox(height: 50)
+                    SizedBox(height: 30),
+                    SizedBox(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        onPressed: () {
+                          repository.doneTask(task.id);
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Done',
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        
+                        color: Colors.teal,
+                        textColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20)
                   ],
                 ),
               );
@@ -75,6 +99,7 @@ class ListItem extends StatelessWidget {
         },
         child: Card(
           elevation: 1,
+          color: task.isDone ? Colors.teal : Colors.white,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -99,7 +124,7 @@ class ListItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '20.02.2020',
+                      '${DateFormat("dd.MM.yyyy").format(task.dueDate)}',
                       style: TextStyle(
                         color: Colors.black38
                       ),

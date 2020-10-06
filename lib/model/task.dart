@@ -1,20 +1,26 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Task extends ChangeNotifier {
+  String id;
   String Title;
   String Description;
-  bool Status;
+  bool isDone;
+  DateTime dueDate;
   
-  Task(String title, String description, bool status){
+  Task(String id, String title, String description, bool status, DateTime dueDate){
+    this.id = id;
     this.Title = title;
     this.Description = description;
-    this.Status = status;
+    this.isDone = status;
+    this.dueDate = dueDate;
   }
   
   Future updateTask(Task updateTask) {
+    this.id = updateTask.id;
     this.Title = updateTask.Title;
     this.Description = updateTask.Description;
-    this.Status = updateTask.Status;
+    this.isDone = updateTask.isDone;
+    this.dueDate = updateTask.dueDate;
     
     notifyListeners();
   }
