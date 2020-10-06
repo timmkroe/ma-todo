@@ -205,6 +205,9 @@ class _HomeState extends State<Home> {
                                         selectedDate);
                                     repository.newTask(task);
                                     _fetchTasks();
+                                    titleController.text = "";
+                                    descriptionController.text = "";
+                                    dueDateController.text = "";
                                     Navigator.pop(context);
                                   }
                                 },
