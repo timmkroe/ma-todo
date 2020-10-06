@@ -50,48 +50,55 @@ class ListItem extends StatelessWidget {
                         SizedBox(width: 4),
                         Text(
                           '${DateFormat("dd.MM.yyyy").format(task.dueDate)}',
-                          style: TextStyle(
-                              color: Colors.black38
-                          ),
+                          style: TextStyle(color: Colors.black38),
                         )
                       ],
                     ),
                     SizedBox(height: 20),
                     RichText(
                       text: TextSpan(
-                          style: TextStyle(
-                              color: Colors.black45,
-                              fontSize: 20
-                          ),
+                          style: TextStyle(color: Colors.black45, fontSize: 20),
                           children: <TextSpan>[
-                            TextSpan(
-                                text: '${task.Description}'
-                            )
-                          ]
-                      ),
+                            TextSpan(text: '${task.Description}')
+                          ]),
                     ),
                     SizedBox(height: 30),
-                    !task.isDone ?
-                    SizedBox(
-                      width: double.infinity,
-                      child: RaisedButton(
-                        onPressed: () {
-                          repository.doneTask(task.id);
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          'Done',
-                          style: TextStyle(fontSize: 25),
-                        ),
-                        
-                        color: Colors.teal,
-                        textColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                    ) : SizedBox(height: 20),
-                    SizedBox(height: 20)
+                    !task.isDone
+                        ? SizedBox(
+                            width: double.infinity,
+                            child: RaisedButton(
+                              onPressed: () {
+                                repository.doneTask(task.id);
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'Done',
+                                style: TextStyle(fontSize: 25),
+                              ),
+                              color: Colors.teal,
+                              textColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                          )
+                        : SizedBox(
+                            width: double.infinity,
+                            child: RaisedButton(
+                              onPressed: () {
+                                repository.deletetask(task.id);
+                                Navigator.pop(context);
+                              },
+                              child: Text('Delete',
+                                  style: TextStyle(fontSize: 25)),
+                              color: Colors.red,
+                              textColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                          ),
+                    SizedBox(height: 20),
                   ],
                 ),
               );
@@ -117,18 +124,14 @@ class ListItem extends StatelessWidget {
                             maxLines: 1,
                             softWrap: false,
                             style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold
-                            ),
+                                fontSize: 25, fontWeight: FontWeight.bold),
                           )
                         ],
                       ),
                     ),
                     Text(
                       '${DateFormat("dd.MM.yyyy").format(task.dueDate)}',
-                      style: TextStyle(
-                        color: Colors.black38
-                      ),
+                      style: TextStyle(color: Colors.black38),
                     )
                   ],
                 ),

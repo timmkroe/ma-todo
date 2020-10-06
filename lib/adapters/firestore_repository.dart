@@ -15,8 +15,8 @@ class FireStoreRepository {
           value.docs.forEach((doc) {
             DateTime date = (doc.get("dueDate") as Timestamp).toDate();
 
-            Task tmp = Task(doc.id, doc.get("title"),
-                doc.get("description"), doc.get("isDone"), date);
+            Task tmp = Task(doc.id, doc.get("title"), doc.get("description"),
+                doc.get("isDone"), date);
             tasks.add(tmp);
             print(tmp.dueDate);
           })
@@ -51,5 +51,10 @@ class FireStoreRepository {
       'isDone': task.isDone,
       'dueDate': task.dueDate
     });
+  }
+
+  // Delete
+  Future<void> deletetask(String id) async {
+    await todoCollection.doc(id).delete();
   }
 }
