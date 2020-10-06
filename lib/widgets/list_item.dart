@@ -71,6 +71,7 @@ class ListItem extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 30),
+                    !task.isDone ?
                     SizedBox(
                       width: double.infinity,
                       child: RaisedButton(
@@ -89,7 +90,7 @@ class ListItem extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                    ),
+                    ) : SizedBox(height: 20),
                     SizedBox(height: 20)
                   ],
                 ),
