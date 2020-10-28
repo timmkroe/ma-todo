@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ma_todo/adapters/firestore_repository.dart';
 import 'package:ma_todo/model/task.dart';
-import 'package:ma_todo/pages/Home.dart';
 
 class ListItem extends StatelessWidget {
   ListItem({Key key, this.task}) : super(key: key);
@@ -38,7 +37,7 @@ class ListItem extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                '${task.Title}',
+                                '${task.title}',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -59,7 +58,7 @@ class ListItem extends StatelessWidget {
                       text: TextSpan(
                           style: TextStyle(color: Colors.black45, fontSize: 20),
                           children: <TextSpan>[
-                            TextSpan(text: '${task.Description}')
+                            TextSpan(text: '${task.description}')
                           ]),
                     ),
                     SizedBox(height: 30),
@@ -107,7 +106,7 @@ class ListItem extends StatelessWidget {
         },
         child: Card(
           elevation: 1,
-          color: task.isDone ? Colors.teal : Colors.white,
+          color: task.isDone ? Colors.teal.shade200 : Colors.white,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -119,7 +118,7 @@ class ListItem extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            '${task.Title}',
+                            '${task.title}',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
@@ -135,7 +134,7 @@ class ListItem extends StatelessWidget {
                     )
                   ],
                 ),
-                subtitle: Text('${task.Description}'),
+                subtitle: Text('${task.description}'),
               ),
             ],
           ),

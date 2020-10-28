@@ -2,26 +2,27 @@ import 'package:flutter/material.dart';
 
 class Task extends ChangeNotifier {
   String id;
-  String Title;
-  String Description;
+  String title;
+  String description;
   bool isDone;
   DateTime dueDate;
-  
-  Task(String id, String title, String description, bool status, DateTime dueDate){
+
+  Task(String id, String title, String description, bool status,
+      DateTime dueDate) {
     this.id = id;
-    this.Title = title;
-    this.Description = description;
+    this.title = title;
+    this.description = description;
     this.isDone = status;
     this.dueDate = dueDate;
   }
-  
-  Future updateTask(Task updateTask) {
+
+  void updateTask(Task updateTask) {
     this.id = updateTask.id;
-    this.Title = updateTask.Title;
-    this.Description = updateTask.Description;
+    this.title = updateTask.title;
+    this.description = updateTask.description;
     this.isDone = updateTask.isDone;
     this.dueDate = updateTask.dueDate;
-    
+
     notifyListeners();
   }
 }

@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:intl/intl.dart';
 import 'package:ma_todo/model/task.dart';
 
 class FireStoreRepository {
@@ -31,8 +29,8 @@ class FireStoreRepository {
   // Insert new
   Future<void> newTask(Task task) async {
     await todoCollection.add({
-      'title': task.Title,
-      'description': task.Description,
+      'title': task.title,
+      'description': task.description,
       'isDone': false,
       'dueDate': task.dueDate
     });
@@ -46,8 +44,8 @@ class FireStoreRepository {
   // Update
   Future<void> updateTask(String id, Task task) async {
     await todoCollection.doc(id).update({
-      'title': task.Title,
-      'description': task.Description,
+      'title': task.title,
+      'description': task.description,
       'isDone': task.isDone,
       'dueDate': task.dueDate
     });
