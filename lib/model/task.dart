@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Task Model
 class Task extends ChangeNotifier {
   String id;
   String title;
@@ -7,6 +8,7 @@ class Task extends ChangeNotifier {
   bool isDone;
   DateTime dueDate;
 
+  // Constructor
   Task(String id, String title, String description, bool status,
       DateTime dueDate) {
     this.id = id;
@@ -16,6 +18,7 @@ class Task extends ChangeNotifier {
     this.dueDate = dueDate;
   }
 
+  // update Task & notify listeners
   void updateTask(Task updateTask) {
     this.id = updateTask.id;
     this.title = updateTask.title;

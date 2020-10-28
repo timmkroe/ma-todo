@@ -37,6 +37,7 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
+  // Pull to refresh method to get latest tasks
   _fetchTasks() async {
     try {
       setState(() {

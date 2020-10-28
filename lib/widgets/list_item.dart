@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:ma_todo/adapters/firestore_repository.dart';
 import 'package:ma_todo/model/task.dart';
 
+// Item widget for the list on homescreen
 class ListItem extends StatelessWidget {
   ListItem({Key key, this.task}) : super(key: key);
 
