@@ -50,7 +50,10 @@ class ListItem extends StatelessWidget {
                         SizedBox(width: 4),
                         Text(
                           '${DateFormat("dd.MM.yyyy").format(task.dueDate)}',
-                          style: TextStyle(color: Colors.black38),
+                          style: TextStyle(
+                              color: task.dueDate.isBefore(DateTime.now())
+                                  ? Colors.redAccent
+                                  : Colors.black38),
                         )
                       ],
                     ),
@@ -131,7 +134,10 @@ class ListItem extends StatelessWidget {
                     ),
                     Text(
                       '${DateFormat("dd.MM.yyyy").format(task.dueDate)}',
-                      style: TextStyle(color: Colors.black38),
+                      style: TextStyle(
+                          color: task.dueDate.isBefore(DateTime.now())
+                              ? Colors.redAccent
+                              : Colors.black38),
                     )
                   ],
                 ),
