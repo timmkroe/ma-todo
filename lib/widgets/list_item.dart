@@ -5,6 +5,7 @@ import 'package:ma_todo/adapters/firestore_repository.dart';
 import 'package:ma_todo/model/priority.dart';
 import 'package:ma_todo/model/task.dart';
 import 'package:ma_todo/shared/app_colors.dart';
+import 'package:vibration/vibration.dart';
 
 // Item widget for the list on homescreen
 class ListItem extends StatelessWidget {
@@ -107,8 +108,12 @@ class ListItem extends StatelessWidget {
                         : SizedBox(
                             width: double.infinity,
                             child: RaisedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 repository.deletetask(task.id);
+                                if (await Vibration.hasVibrator()) {
+                                  Vibration.vibrate(
+                                      duration: 200, intensities: [100]);
+                                }
                                 Navigator.pop(context);
                               },
                               child: Text('Delete',
