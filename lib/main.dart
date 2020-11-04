@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ma_todo/pages/Home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/date_symbol_data_local.dart';
-
+import 'package:ma_todo/shared/app_colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,9 +19,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Todo',
       theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        primarySwatch: Colors.teal,
-      ),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          primaryColor: AppColors.primaryColor(),
+          backgroundColor: AppColors.backgroundColor(),
+          accentColor: AppColors.primaryColor()),
       home: Home(),
     );
   }

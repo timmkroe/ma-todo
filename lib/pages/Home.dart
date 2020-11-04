@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ma_todo/adapters/firestore_repository.dart';
+import 'package:ma_todo/model/priority.dart';
 import 'package:ma_todo/model/task.dart';
+import 'package:ma_todo/shared/app_colors.dart';
 import 'package:ma_todo/widgets/list_item.dart';
 
 class Home extends StatefulWidget {
@@ -18,6 +20,7 @@ class _HomeState extends State<Home> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final dueDateController = TextEditingController();
+  Priority _priority = Priority.Low;
 
   // Date
   DateTime selectedDate;
@@ -82,6 +85,7 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           title: Text("Todo"),
         ),
+        backgroundColor: AppColors.backgroundColor(),
         body: Container(
           child: Center(
             child: RefreshIndicator(
@@ -121,7 +125,7 @@ class _HomeState extends State<Home> {
                       Text(
                         'New Task',
                         style: TextStyle(
-                            color: Colors.black,
+                            color: AppColors.primaryTextColor(),
                             fontWeight: FontWeight.bold,
                             fontSize: 30),
                       ),
@@ -193,6 +197,35 @@ class _HomeState extends State<Home> {
                               },
                             ),
                             SizedBox(height: 20),
+                            Container(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  border: Border.all()),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<Priority>(
+                                    isExpanded: true,
+                                    value: _priority,
+                                    items: [
+                                      DropdownMenuItem(
+                                          child: Text('Low'),
+                                          value: Priority.Low),
+                                      DropdownMenuItem(
+                                          child: Text('Medium'),
+                                          value: Priority.Medium),
+                                      DropdownMenuItem(
+                                          child: Text('High'),
+                                          value: Priority.High)
+                                    ],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _priority = value;
+                                      });
+                                    }),
+                              ),
+                            ),
+                            SizedBox(height: 20),
                             SizedBox(
                               width: double.infinity,
                               child: RaisedButton(
@@ -203,7 +236,8 @@ class _HomeState extends State<Home> {
                                         titleController.text,
                                         descriptionController.text,
                                         false,
-                                        selectedDate);
+                                        selectedDate,
+                                        _priority.index);
                                     repository.newTask(task);
                                     _fetchTasks();
                                     titleController.text = "";
@@ -216,7 +250,7 @@ class _HomeState extends State<Home> {
                                   'Save',
                                   style: TextStyle(fontSize: 25),
                                 ),
-                                color: Colors.teal,
+                                color: AppColors.primaryColor(),
                                 textColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),

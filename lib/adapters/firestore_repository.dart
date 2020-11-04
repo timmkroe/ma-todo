@@ -20,11 +20,11 @@ class FireStoreRepository {
 
             // tmp task to add to list
             Task tmp = Task(doc.id, doc.get("title"), doc.get("description"),
-                doc.get("isDone"), date);
+                doc.get("isDone"), date, doc.get("priority") ?? 0);
             tasks.add(tmp);
           })
         });
-    
+
     // sort by due date
     tasks.sort((a, b) {
       return a.dueDate.compareTo(b.dueDate);
@@ -39,7 +39,8 @@ class FireStoreRepository {
       'title': task.title,
       'description': task.description,
       'isDone': false,
-      'dueDate': task.dueDate
+      'dueDate': task.dueDate,
+      'priority': task.priority.index
     });
   }
 
@@ -54,7 +55,8 @@ class FireStoreRepository {
       'title': task.title,
       'description': task.description,
       'isDone': task.isDone,
-      'dueDate': task.dueDate
+      'dueDate': task.dueDate,
+      'priority': task.priority
     });
   }
 
