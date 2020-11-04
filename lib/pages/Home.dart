@@ -6,6 +6,7 @@ import 'package:ma_todo/model/priority.dart';
 import 'package:ma_todo/model/task.dart';
 import 'package:ma_todo/shared/app_colors.dart';
 import 'package:ma_todo/widgets/list_item.dart';
+import 'package:vibration/vibration.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -229,7 +230,7 @@ class _HomeState extends State<Home> {
                             SizedBox(
                               width: double.infinity,
                               child: RaisedButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   if (_formKey.currentState.validate()) {
                                     Task task = new Task(
                                         null,
@@ -239,6 +240,10 @@ class _HomeState extends State<Home> {
                                         selectedDate,
                                         _priority.index);
                                     repository.newTask(task);
+                                    if (await Vibration.hasVibrator()) {
+                                      Vibration.vibrate(
+                                          duration: 200, intensities: [100]);
+                                    }
                                     _fetchTasks();
                                     titleController.text = "";
                                     descriptionController.text = "";
