@@ -112,7 +112,8 @@ class ListItem extends StatelessWidget {
                                 repository.deletetask(task.id);
                                 if (await Vibration.hasVibrator()) {
                                   Vibration.vibrate(
-                                      duration: 200, intensities: [100]);
+                                      duration: 200,
+                                      intensities: [100]);
                                 }
                                 Navigator.pop(context);
                               },
@@ -152,6 +153,7 @@ class ListItem extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
+                                  decoration: task.isDone ? TextDecoration.lineThrough : TextDecoration.none,
                                   color: AppColors.primaryTextColor()))
                         ],
                       ),
@@ -163,12 +165,14 @@ class ListItem extends StatelessWidget {
                               ? task.isDone
                                   ? AppColors.primaryTextColor()
                                   : AppColors.redAccentcolor()
-                              : AppColors.primaryTextColor()),
+                              : AppColors.primaryTextColor(),
+                              decoration: task.isDone ? TextDecoration.lineThrough : TextDecoration.none,
+                              ),
                     )
                   ],
                 ),
                 subtitle: Text('${task.description}',
-                    style: TextStyle(color: AppColors.primaryTextColor())),
+                    style: TextStyle(color: AppColors.primaryTextColor(), decoration: task.isDone ? TextDecoration.lineThrough : TextDecoration.none,)),
               ),
             ],
           ),
