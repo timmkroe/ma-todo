@@ -63,7 +63,9 @@ class ListItem extends StatelessWidget {
                           style: TextStyle(
                               color: task.dueDate.isBefore(DateTime.now())
                                   ? AppColors.redAccentcolor()
-                                  : AppColors.primaryTextColor()),
+                                  : AppColors.primaryTextColor(),
+                              fontWeight: task.dueDate.isBefore(DateTime.now()) ? FontWeight.bold : FontWeight.normal    
+                              ),
                         )
                       ],
                     ),
@@ -154,7 +156,9 @@ class ListItem extends StatelessWidget {
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
                                   decoration: task.isDone ? TextDecoration.lineThrough : TextDecoration.none,
-                                  color: AppColors.primaryTextColor()))
+                                  color: AppColors.primaryTextColor(),
+                            )
+                          )
                         ],
                       ),
                     ),
@@ -167,6 +171,7 @@ class ListItem extends StatelessWidget {
                                   : AppColors.redAccentcolor()
                               : AppColors.primaryTextColor(),
                               decoration: task.isDone ? TextDecoration.lineThrough : TextDecoration.none,
+                              fontWeight: task.dueDate.isBefore(DateTime.now()) ? FontWeight.bold : FontWeight.normal
                               ),
                     )
                   ],

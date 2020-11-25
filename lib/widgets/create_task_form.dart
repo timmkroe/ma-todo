@@ -163,7 +163,6 @@ class _CreateTaskFormState extends State<CreateTaskForm> {
                           Vibration.vibrate(
                               duration: 200, intensities: [100]);
                         }
-                        // TODO: fetch Tasks here!
                         titleController.text = "";
                         descriptionController.text = "";
                         dueDateController.text = "";

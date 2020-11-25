@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:ma_todo/adapters/firestore_repository.dart';
-import 'package:ma_todo/model/priority.dart';
 import 'package:ma_todo/model/task.dart';
 import 'package:ma_todo/shared/app_colors.dart';
 import 'package:ma_todo/widgets/create_task_form.dart';
 import 'package:ma_todo/widgets/list_item.dart';
-import 'package:vibration/vibration.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,14 +12,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final _formKey = GlobalKey<FormState>();
   FireStoreRepository repository = FireStoreRepository();
   bool _isLoading = true;
   List<Task> tasks;
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final dueDateController = TextEditingController();
-  Priority _priority = Priority.Low;
 
   // Date
   DateTime selectedDate;

@@ -8,7 +8,7 @@ abstract class AppColors {
   }
 
   static Color redAccentcolor() {
-    return const Color.fromRGBO(197, 48, 48, 1.0);
+    return const Color.fromRGBO(127, 29, 29, 1.0);
   }
 
   static Color backgroundColor() {
